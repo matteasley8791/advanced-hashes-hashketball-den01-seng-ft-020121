@@ -171,8 +171,10 @@ def player_numbers(team_numbers)
   end
 end
 
-def player_stats(player_name)
-  players[player_name]
+def player_stats(player_n)
+  game_hash.each do |location, keys|
+    keys[:players].each do |player|
+      
 end
 
 def big_shoe_rebounds
