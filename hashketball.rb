@@ -126,4 +126,72 @@ def game_hash
   }
 end
 
-# Write code here
+def get_players
+  game_hash.map { |_, team|
+  team[:players]
+  }.flatten
+end
+
+def team(team_name)
+  case team_name
+  when game_hash[:home][:team_name]
+    game_hash[:home]
+    when game_hash[:away][:team_name]
+    game_hash[:away]
+  end
+end
+
+def get_player_by_name(player_name)
+  get_players.find do |player|
+    player[:player_name] == player_name
+  end
+end
+
+def num_points_scored(player_name)
+  get_player_by_name(player_name)[:points]
+end
+
+def shoe_size(player_name)
+  get_player_by_name(player_name)[:shoe]
+end
+
+def team_colors(team_name)
+  team(team_name)[:colors]
+end
+
+def team_names
+  [game_hash[:home][:team_name], game_hash[:away][:team_name]]
+end 
+
+def player_numbers(team_numbers)
+  game_hash.each do |location, keys| 
+    if keys[:team_name] == team_numbers
+      return keys[:players].map { |player| player[:number] }
+    end
+  end
+end
+
+def player_stats(player_name)
+  game_hash.each do |location, keys|
+    keys[:players].each do |player|
+      if player[:player_name] == player_name
+        return player
+      end
+    end
+  end
+end 
+
+def big_shoe_rebounds
+  biggest = 0 
+  rebounds = 0 
+  game_hash.each do |location, keys|
+    keys[:players].each do |player|
+      size = player[:shoe]
+      if size > biggest
+        biggest = size 
+        rebounds = player[:rebounds]
+      end 
+    end
+  end 
+  rebounds
+end 
