@@ -126,9 +126,11 @@ def game_hash
   }
 end
 
-# def players
-#   game_hash[:home][:players].concat(game_hash[:away][:players])
-# end
+def get_players
+  game_hash.map { |_, team|
+  team[:players]
+  }.flatten
+end
 
 def team(team_name)
   case team_name
@@ -139,25 +141,11 @@ def team(team_name)
   end
 end
 
-def get_players
-  game_hash.map { |_, team|
-  team[:players]
-  }.flatten
-end
-
 def get_player_by_name(player_name)
   get_players.find do |player|
     player[:player_name] == player_name
   end
 end
-
-# def num_points_scored(player_name)
-#   game_hash.each do |location, team|
-#     team[:players].each do |player|
-#       return player[:points] if player[:player_name] == player_name
-#     end
-#   end
-# end
 
 def num_points_scored(player_name)
   get_player_by_name(player_name)[:points]
